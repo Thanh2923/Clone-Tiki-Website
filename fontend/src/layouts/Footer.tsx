@@ -29,22 +29,22 @@ Chính sách kiểm hàng
 Chính sách đổi trả
 Hướng dẫn trả góp
 Chính sách hàng nhập khẩu
-Hỗ trợ khách hàng: hotro@tiki.vn
+Hỗ trợ khách hàng: hotro@fdnshhop.vn
 
-Báo lỗi bảo mật: security@tiki.vn</p>
+Báo lỗi bảo mật: security@fdnshhop.vn</p>
         </div>
         <div className="px-2">
-            <h3 className="font-semibold text-[14px] mb-2">Về Tiki</h3>
+            <h3 className="font-semibold text-[14px] mb-2">Về FDN Shop</h3>
             <p className="text-[12px] text-slate-500">
-            Giới thiệu Tiki
-Tiki Blog
+            Giới thiệu FDN Shop
+FDN Shop Blog
 Tuyển dụng
 Chính sách bảo mật thanh toán
 Chính sách bảo mật thông tin cá nhân
 Chính sách giải quyết khiếu nại
 Điều khoản sử dụng
-Giới thiệu Tiki Xu
-Tiếp thị liên kết cùng Tiki
+Giới thiệu FDN Shop Xu
+Tiếp thị liên kết cùng FDN Shop
 Bán hàng doanh nghiệp
 Điều kiện vận chuyển
                 </p>
@@ -53,7 +53,7 @@ Bán hàng doanh nghiệp
             <h3 className="font-semibold text-[14px] mb-2">Hợp tác và liên kết</h3>
             <p className="text-[12px] text-slate-500">
             Quy chế hoạt động Sàn GDTMĐT
-            Bán hàng cùng Tiki
+            Bán hàng cùng FDN Shop
                 </p>
                 <h3 className="font-semibold text-[14px] mb-2">Chứng nhận bởi</h3>
                 <div className="w-full flex gap-2">
@@ -91,7 +91,7 @@ Bán hàng doanh nghiệp
     
     <div className="w-full px-5 py-5 bg-white grid grid-cols-1">
     <div className="px-2">
-            <h3 className="font-semibold text-[14px] mb-2">Công ty TNHH TI KI</h3>
+            <h3 className="font-semibold text-[14px] mb-2">Công ty TNHH FDN Shop</h3>
             <p className="text-[12px] text-slate-500">Tòa nhà số 52 đường Út Tịch, Phường 4, Quận Tân Bình, Thành phố Hồ Chí Minh</p>
             <p className="text-[12px] text-slate-500">Giấy chứng nhận đăng ký doanh nghiệp số 0309532909 do Sở Kế Hoạch và Đầu Tư Thành phố Hồ Chí Minh cấp lần đầu vào ngày 06/01/2010.</p>
             <p className="text-[12px] text-slate-500">Hotline: <span className="text-blue-500">0931 247 957</span></p>

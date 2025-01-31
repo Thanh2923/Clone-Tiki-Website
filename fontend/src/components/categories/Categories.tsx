@@ -32,7 +32,7 @@ const Categories = async () => {
   const data = await fetchCategories();
 
   return (
-    <div className="w-full ">
+    <div className="w-full lg:block hidden ">
       <div className="w-full px-2 py-5">
         <h2 className="font-semibold px-5 py-2 text-[16px]">Danh mục</h2>
         <div className="w-full ">

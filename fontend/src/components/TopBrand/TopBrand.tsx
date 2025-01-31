@@ -13,7 +13,7 @@ const TopBrand:React.FC = () => {
   return (
     <div className="w-full rounded-lg px-2 pb-5 mb-5  bg-gradient-to-r from-indigo-200">
       <Title title="Thương hiệu nổi bật"/>
-      <div className="w-full grid cursor-pointer grid-cols-2 gap-5 md:grid-cols-4 lg:grid-cols-6">
+      <div className="w-full grid cursor-pointer grid-cols-3 gap-5 md:grid-cols-4 lg:grid-cols-6">
         {urlImage.map((item,index)=>(
 
  <div key={index}>

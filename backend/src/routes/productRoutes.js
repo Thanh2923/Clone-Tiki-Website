@@ -2,8 +2,13 @@ const express = require('express');
 const productController = require('../controllers/productController');
 const router = express.Router();
 
+// Tìm kiếm sản phẩm phải đặt trước /:id
+router.get('/search/', productController.searchProducts);
+
 // Lấy tất cả sản phẩm
 router.get('/', productController.getProducts);
+
+// Lấy sản phẩm theo ID
 router.get('/:id', productController.getProductById);
 
 // Tạo sản phẩm mới

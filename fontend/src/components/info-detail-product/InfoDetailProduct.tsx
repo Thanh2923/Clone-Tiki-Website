@@ -43,11 +43,11 @@ const InfoDetailProduct: React.FC<Item> = ({ productDetails }) => {
           </p>
         </div>
       </div>
-      <div className="w-full px-5 rounded-lg h-[200px] bg-white">
+      <div className="w-full px-5 hidden rounded-lg lg:h-[200px] bg-white">
         <Title title="Dịch vụ bổ sung" />
         <div className="flex py-2 items-center gap-3">
           <Image src="/logo/tikicart.png" alt="Logo" width={30} height={30} />
-          <h3>Ưu đãi đến 600k với thẻ TikiCard</h3>
+          <h3>Ưu đãi đến 600k với thẻ FDN Shop</h3>
         </div>
         <div className="flex items-center gap-3">
           <Image src="/logo/paylater.png" alt="Logo" width={30} height={40} />

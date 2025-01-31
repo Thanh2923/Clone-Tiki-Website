@@ -1,14 +1,31 @@
-const { Order } = require('../models');
+const { Order,User } = require('../models');
 
 const orderService = {
   // Lấy tất cả đơn hàng của một người dùng
-  getOrdersByUser: async (userId) => {
+  getOrders: async ( ) => {
+    try {
+      const orders = await Order.findAll();
+      return orders;
+    } catch (error) {
+      
+      throw new Error('Error fetching orders');
+    }
+  },
+
+
+  getOrdersByUser: async ( userId) => {
     try {
       const orders = await Order.findAll({
-        where: { userId },
+        where: {  userId },
+        include: [
+        {
+          model: User,           // Kết nối với bảng Brand
+          as: 'user',            // Alias cho mối quan hệ
+        }]
       });
       return orders;
     } catch (error) {
+      
       throw new Error('Error fetching orders');
     }
   },

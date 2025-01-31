@@ -32,11 +32,14 @@ export const fetchOrders = createAsyncThunk<Order[], void>(
 );
 
 // Fetch order by ID
-export const fetchOrderById = createAsyncThunk<Order, number>(
+export const fetchOrderById = createAsyncThunk<Order[], void>(
   'orders/fetchOrderById',
-  async (orderId) => {
+  async () => {
     try {
-      const response = await axios.get(`${API_URL}/${orderId}`);
+      const headers = await getAuthHeaders(); 
+      const response = await axios.get(`${API_URL}/order/byId`,{
+        headers
+      });
       return response.data;
     } catch (error) {
         if (error instanceof AxiosError) {
@@ -45,6 +48,10 @@ export const fetchOrderById = createAsyncThunk<Order, number>(
     }
   }
 );
+
+
+
+
 
 // Create new order
 export const createOrder = createAsyncThunk(

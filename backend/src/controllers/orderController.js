@@ -5,7 +5,16 @@ const cartService = require('../services/cartService');
 const orderController = {
   // Lấy tất cả đơn hàng của người dùng
   getOrders: async (req, res) => {
-    const userId = req.params.userId;
+    try {
+      const orders = await orderService.getOrders();
+      res.status(200).json(orders);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  },
+
+  getOrdersByUserId: async (req, res) => {
+    const userId = req.user.id;
     try {
       const orders = await orderService.getOrdersByUser(userId);
       res.status(200).json(orders);
@@ -16,7 +25,7 @@ const orderController = {
 
   createOrder: async (req, res) => {
     const userId = req.user.id;
-    const { orderDetail, totalPrice, cartId } = req.body;
+    const { orderDetail, totalPrice, cartId=null } = req.body;
   
     try {
       const newOrder = await orderService.createOrder({ userId, totalPrice });
@@ -34,7 +43,9 @@ const orderController = {
         });
       }
   
+    if(cartId){
       await cartService.removeFromInCartId(cartId)
+    }
       res.status(201).json({ message: "Đặt hàng thành công", order: newOrder });
     } catch (error) {
       res.status(500).json({ message: error.message });

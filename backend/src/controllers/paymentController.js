@@ -1,34 +1,22 @@
-const paymentService = require('../services/paymentService');
+const paymentService = require("../services/paymentService");  // Đảm bảo bạn import đúng
 
 const paymentController = {
-  // Lấy tất cả các payment của một đơn hàng
-  getPaymentsByOrder: async (req, res) => {
-    const orderId = req.params.orderId;
-    try {
-      const payments = await paymentService.getPaymentsByOrder(orderId);
-      res.status(200).json(payments);
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-    }
-  },
-
-  // Lấy tất cả các payment của người dùng
-  getPaymentsByUser: async (req, res) => {
-    const userId = req.params.userId;
-    try {
-      const payments = await paymentService.getPaymentsByUser(userId);
-      res.status(200).json(payments);
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-    }
-  },
-
-  // Tạo một payment mới
+  // Tạo thanh toán mới
   createPayment: async (req, res) => {
-    const { orderId, userId, paymentMethod, status, transactionId } = req.body;
+    const { orderId, userId, amount, paymentMethod } = req.body;
     try {
-      const newPayment = await paymentService.createPayment({ orderId, userId, paymentMethod, status, transactionId });
-      res.status(201).json(newPayment);
+      const { payment, payosUrl } = await paymentService.createPayment({
+        orderId,
+        userId,
+        amount,
+        paymentMethod,
+      });
+
+      // Trả về thông tin payment và URL PayOS
+      res.status(201).json({
+        payment,
+        payosUrl,
+      });
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
@@ -36,22 +24,10 @@ const paymentController = {
 
   // Cập nhật trạng thái thanh toán
   updatePayment: async (req, res) => {
-    const paymentId = req.params.id;
-    const { status, transactionId } = req.body;
+    const { transactionId, status } = req.body;
     try {
-      const updatedPayment = await paymentService.updatePayment(paymentId, { status, transactionId });
+      const updatedPayment = await paymentService.updatePaymentStatus(transactionId, status);
       res.status(200).json(updatedPayment);
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-    }
-  },
-
-  // Xóa một payment
-  deletePayment: async (req, res) => {
-    const paymentId = req.params.id;
-    try {
-      await paymentService.deletePayment(paymentId);
-      res.status(200).json({ message: `Payment with ID ${paymentId} deleted successfully` });
     } catch (error) {
       res.status(500).json({ message: error.message });
     }

@@ -13,21 +13,21 @@ module.exports = (sequelize, DataTypes) => {
       // Define association with the Category model
       Product.belongsTo(models.Category, {
         foreignKey: 'categoryId',
-        as: 'category', // Optional alias for the relation
-        onDelete: 'SET NULL', // Optional: Set category to NULL when category is deleted
-        onUpdate: 'CASCADE' // Optional: Cascade updates to related products when category is updated
+        as: 'category',
+        onDelete: 'SET NULL', 
+        onUpdate: 'CASCADE' 
       });
 
       Product.belongsTo(models.Brand, {
         foreignKey: 'brandId',
-        as: 'brand', // Optional alias for the relation
-        onDelete: 'SET NULL', // Optional: Set category to NULL when category is deleted
-        onUpdate: 'CASCADE' // Optional: Cascade updates to related products when category is updated
+        as: 'brand',
+        onDelete: 'SET NULL', 
+        onUpdate: 'CASCADE' 
       });
       Product.hasMany(models.Image, {
         foreignKey: 'productId',
-        as: 'images',  // alias cho mối quan hệ
-        onDelete: 'CASCADE',  // Nếu sản phẩm bị xóa, ảnh cũng sẽ bị xóa
+        as: 'images', 
+        onDelete: 'CASCADE', 
       });
     
     }

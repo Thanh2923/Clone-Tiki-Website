@@ -7,14 +7,14 @@ module.exports = (sequelize, DataTypes) => {
     },
     name: {
       type: DataTypes.STRING,
-      allowNull: true, // Không bắt buộc nhập tên
+      allowNull: true, 
     },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
       validate: {
-        isEmail: true, // Kiểm tra đúng định dạng email
+        isEmail: true,
       },
     },
     password: {
@@ -24,9 +24,9 @@ module.exports = (sequelize, DataTypes) => {
     role: {
       type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: "user", // Mặc định là "user"
+      defaultValue: "user",
       validate: {
-        isIn: [["user", "admin"]], // Chỉ chấp nhận "user" hoặc "admin"
+        isIn: [["user", "admin"]], 
       },
     },
     phone: {

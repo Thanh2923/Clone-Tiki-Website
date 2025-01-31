@@ -13,40 +13,40 @@ module.exports = (sequelize, DataTypes) => {
       // Mối quan hệ với bảng Orders
       Payment.belongsTo(models.Order, {
         foreignKey: 'orderId',
-        as: 'order', // Alias cho quan hệ
-        onDelete: 'CASCADE', // Xóa đơn hàng khi người dùng bị xóa
-        onUpdate: 'CASCADE'  // Cập nhật userId khi người dùng được cập nhật
+        as: 'order', 
+        onDelete: 'CASCADE', 
+        onUpdate: 'CASCADE' 
       });
 
       // Mối quan hệ với bảng Users
       Payment.belongsTo(models.User, {
         foreignKey: 'userId',
-        as: 'user', // Alias cho quan hệ
-        onDelete: 'CASCADE', // Xóa đơn hàng khi người dùng bị xóa
-        onUpdate: 'CASCADE'  // Cập nhật userId khi người dùng được cập nhật
+        as: 'user', 
+        onDelete: 'CASCADE', 
+        onUpdate: 'CASCADE'  
       });
     }
   }
   Payment.init({
     orderId: {
       type: DataTypes.INTEGER,
-      allowNull: false, // orderId không thể null
+      allowNull: false, 
     },
     userId: {
       type: DataTypes.INTEGER,
-      allowNull: false, // userId không thể null
+      allowNull: false, 
     },
     paymentMethod: {
       type: DataTypes.ENUM('credit_card', 'paypal', 'bank_transfer', 'cash_on_delivery'),
-      allowNull: false,  // paymentMethod không thể null
+      allowNull: false,  
     },
     status: {
       type: DataTypes.ENUM('pending', 'completed', 'failed'),
-      allowNull: false,  // status không thể null
+      allowNull: false,  
     },
     transactionId: {
       type: DataTypes.STRING,
-      allowNull: true,  // transactionId có thể null
+      allowNull: true,  
     }
   }, {
     sequelize,

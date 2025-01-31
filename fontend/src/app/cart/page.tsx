@@ -44,18 +44,24 @@ const CartPage: React.FC = () => {
 }, [API_URL]);
 
   return (
-    <div className="w-full">
-      <h1 className="text-2xl text-gray-700 font-bold mb-4">GIỎ HÀNG</h1>
-      <div className="w-full flex gap-2">
-        <div className="lg:w-[70%] w-full">
-          <CartItem handleSetTotal={handleSetTotal} handleCartItem={handleCartItem} />
-          <ProductItem data={products}/>
-        </div>
-        <div className="lg:w-[30%]">
-          <CartPurchase totalPrice={totalPrice} cartItem={cartItem} />
-        </div>
-      </div>
+<div className="w-full">
+  <h1 className="text-2xl text-gray-700 font-bold mb-4">GIỎ HÀNG</h1>
+  <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-4">
+    <div className="w-full lg:col-span-8">
+      <CartItem handleSetTotal={handleSetTotal} handleCartItem={handleCartItem} />
     </div>
+    <div className="w-full lg:col-span-4">
+      <CartPurchase totalPrice={totalPrice} cartItem={cartItem} />
+    </div>
+
+   
+    <div className="w-full lg:col-span-12">
+      <ProductItem data={products} />
+    </div>
+  
+  </div>
+</div>
+
   );
 };
 

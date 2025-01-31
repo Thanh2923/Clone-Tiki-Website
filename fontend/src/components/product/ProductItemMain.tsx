@@ -13,9 +13,9 @@ const ProductItemMain:React.FC<Products> = ({products}) => {
   const pathname = usePathname();
   const basePath = "/" + pathname.split("/").slice(1, 3).join("/");
   return (
-    <div className="w-full cursor-pointer  mt-3 grid grid-cols-2 gap-3 md:grid-cols-4 lg:grid-cols-6 ">
+    <div className="w-full cursor-pointer text-[12px]  mt-3 grid grid-cols-3 gap-3 md:grid-cols-4 lg:grid-cols-6 ">
        {products.map((product, index) => (
-       <>
+    
         <Link key={index} href={`${basePath}/${slugify(product.name)}/${product.id}`}>
 
 <div  className="py-5  hover:shadow-xl rounded-lg flex px-3 bg-white flex-col">
@@ -45,7 +45,7 @@ const ProductItemMain:React.FC<Products> = ({products}) => {
     </span>
   </div>
         </Link>
-       </>
+     
  
 ))} 
     </div>

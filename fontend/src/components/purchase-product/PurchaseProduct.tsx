@@ -17,6 +17,7 @@ interface ItemCart {
   productId:number,
   quantity:number
 }
+
 const PurchaseProduct: React.FC<Item> = ({ productDetails}) => {
   const {data:session} = useSession();
   const router = useRouter();
@@ -24,9 +25,19 @@ const PurchaseProduct: React.FC<Item> = ({ productDetails}) => {
   const [quantity, setQuantity] = useState<number>(1);
   const images = productDetails.images.map((img) => `/product/images/${img.url}`);
  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+
+
   const increaseQuantity = () => setQuantity(quantity + 1);
   const decreaseQuantity = () => setQuantity(Math.max(1, quantity - 1));
-    // Hàm xử lý thêm sản phẩm vào giỏ
+  const handleCheckout = () => {
+   
+      if(productDetails){
+        const encodedCart = encodeURIComponent(JSON.stringify([{product:productDetails,quantity:quantity}]));
+      router.push(`/pay?order=${encodedCart}`);
+      }
+   
+  
+  };
     const handleAddCart = async (productId: number) => {
 
       if(session){
@@ -54,7 +65,7 @@ const PurchaseProduct: React.FC<Item> = ({ productDetails}) => {
       {/* Header */}
       <div className="flex border-b-[1px] pb-3 items-center gap-2">
         <Image src="/logo/logo1.png" alt="Tiki Trading" width={50} height={20} />
-        <p className="text-gray-500 text-sm font-semibold">Tiki Trading</p>
+        <p className="text-gray-500 text-sm font-semibold">FDN Shop Trading</p>
         <span className="text-yellow-500 text-sm flex items-center">
           ⭐ 4.7 <span className="text-gray-400">(5.5tr+ đánh giá)</span>
         </span>
@@ -94,7 +105,7 @@ const PurchaseProduct: React.FC<Item> = ({ productDetails}) => {
 
       {/* Buttons */}
       <div className="mt-4 flex flex-col gap-2">
-        <button className="bg-red-500 text-white py-2 rounded-md font-semibold">
+        <button onClick={handleCheckout} className="bg-red-500 text-white py-2 rounded-md font-semibold">
           Mua ngay
         </button>
         <button  onClick={ ()=>handleAddCart(productDetails.id)} className="border hover:bg-blue-200  border-blue-500 text-blue-500 py-2 rounded-md font-semibold">

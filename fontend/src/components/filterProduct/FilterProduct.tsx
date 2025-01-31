@@ -51,19 +51,19 @@ const FilterProduct = () => {
   return (
     <div className="w-full p-5 rounded-lg bg-white">
       <Title title="Tất cả sản phẩm" />
-      <div className="w-full mb-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[60%,15%,25%]">
+      <div className="w-full mb-3 lg:grid grid-cols-1 hidden md:grid-cols-2 lg:grid-cols-[60%,15%,25%]">
         <span className="text-sm text-slate-500">Thương hiệu</span>
         <span className="text-sm text-slate-500">Giá</span>
         <div className="px-[50px]">
           <span className="text-sm text-slate-500">Lọc</span>
         </div>
       </div>
-      <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[60%,15%,25%]">
+      <div className="w-full grid grid-cols-1  md:grid-cols-2 lg:grid-cols-[60%,15%,25%]">
         {/* Cột đầu tiên (Thương hiệu) */}
         <BrandItem handleFilter={handleFilter} selectedBrand={brandId} setBrand={setBrandId} />
 
         {/* Cột thứ hai (Giá) */}
-        <div className="w-full">
+        <div className="lg:w-full w-[80%] mt-10 lg:mt-0">
           <CustomRangeSlider
             minRange={minRange}
             maxRange={maxRange}
@@ -75,7 +75,7 @@ const FilterProduct = () => {
         </div>
 
         {/* Cột thứ ba (Lọc) */}
-        <div className="w-full gap-3 flex justify-center">
+        <div className="w-full gap-3 mt-3 flex justify-center">
           <Button onClick={handleFilter} className="bg-blue-500 rounded-lg hover:bg-blue-600 text-white border">
             Xem kết quả
           </Button>

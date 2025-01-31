@@ -22,22 +22,22 @@ module.exports = (sequelize, DataTypes) => {
   Order.init({
     userId: {
       type: DataTypes.INTEGER,
-      allowNull: false, // Không cho phép giá trị null
+      allowNull: false,
       references: {
-        model: 'Users', // Tên bảng tham chiếu
-        key: 'id'       // Khóa chính của bảng Users
+        model: 'Users',
+        key: 'id'       
       },
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE'
     },
     totalPrice: {
-      type: DataTypes.DECIMAL(15, 2),  // Precision và Scale cho kiểu DECIMAL
-      allowNull: false  // Tổng giá trị không được null
+      type: DataTypes.DECIMAL(15, 2), 
+      allowNull: false  
     },
     status: {
-      type: DataTypes.ENUM('pending', 'shipped', 'completed', 'cancelled'), // Các trạng thái có thể có
-      allowNull: false, // Không cho phép giá trị null
-      defaultValue: 'pending' // Mặc định là 'pending'
+      type: DataTypes.ENUM('pending', 'shipped', 'completed', 'cancelled'), 
+      allowNull: false, 
+      defaultValue: 'pending' 
     }
   }, {
     sequelize,

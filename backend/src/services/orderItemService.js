@@ -1,4 +1,4 @@
-const { OrderItem } = require('../models');
+const { OrderItem,Product } = require('../models');
 
 const orderItemService = {
   // Lấy tất cả các items của một đơn hàng
@@ -6,6 +6,11 @@ const orderItemService = {
     try {
       const items = await OrderItem.findAll({
         where: { orderId },
+        include: [
+          {
+            model: Product,           // Kết nối với bảng Brand
+            as: 'product',            // Alias cho mối quan hệ
+          }]
       });
       return items;
     } catch (error) {

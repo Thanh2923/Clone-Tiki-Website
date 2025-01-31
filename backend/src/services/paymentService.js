@@ -1,65 +1,63 @@
-const { Payment } = require('../models');
+const { Payment } = require("../models");
+const PayOs = require("@payos/node");
+
+const payOsClient = new PayOs(
+  "e5fbf309-237c-4ad3-8ec9-d6be7616e84a", 
+  "aef25be0-d3b5-43de-9187-60c7bca23a5a", 
+  "68c55f15424d562e146d752407a331daa6d02bafa4bbc29634be53866751135b"
+);
+
+const YOUR_DOMAIN = "http://localhost:3000";
 
 const paymentService = {
-  // Lấy tất cả các payment của một đơn hàng
-  getPaymentsByOrder: async (orderId) => {
+  createPayment: async ({ orderId, userId, amount, paymentMethod}) => {
     try {
-      const payments = await Payment.findAll({
-        where: { orderId },
+      const order = {
+        amount: amount,
+        description: 'Chuyển tiền đặt hàng',
+        orderCode: orderId,
+        returnUrl: `${YOUR_DOMAIN}/payment/success`,
+        cancelUrl: `${YOUR_DOMAIN}/payment/cancel`,
+      };
+
+      const paymentLink = await payOsClient.createPaymentLink(order);
+  console.log(paymentLink,"paymentLink")
+
+      const newPayment = await Payment.create({
+        orderId,
+        userId,
+        paymentMethod,
+        status: "pending",
       });
-      return payments;
+
+      
+      await newPayment.update({ transactionId: response.transactionId });
+
+      return { payment: newPayment, payosUrl: response.checkoutUrl };
     } catch (error) {
-      throw new Error('Error fetching payments for order');
+      console.error("❌ Error creating payment:", error);
+      throw new Error(error.message || "Error creating payment");
     }
   },
 
-  // Lấy tất cả các payment của một người dùng
-  getPaymentsByUser: async (userId) => {
+  updatePaymentStatus: async (transactionId, status) => {
     try {
-      const payments = await Payment.findAll({
-        where: { userId },
-      });
-      return payments;
-    } catch (error) {
-      throw new Error('Error fetching payments for user');
-    }
-  },
+      console.log("🚀 Updating Payment Status:", { transactionId, status });
 
-  // Tạo một payment mới
-  createPayment: async (data) => {
-    try {
-      const newPayment = await Payment.create(data);
-      return newPayment;
-    } catch (error) {
-      throw new Error('Error creating payment');
-    }
-  },
-
-  // Cập nhật trạng thái thanh toán
-  updatePayment: async (paymentId, data) => {
-    try {
-      const payment = await Payment.findByPk(paymentId);
+      const payment = await Payment.findOne({ where: { transactionId } });
       if (!payment) {
-        throw new Error('Payment not found');
+        throw new Error("Payment not found");
       }
-      await payment.update(data);
+
+      payment.status = status;
+      await payment.save();
+
+      console.log("✅ Payment status updated:", payment);
+
       return payment;
     } catch (error) {
-      throw new Error('Error updating payment');
-    }
-  },
-
-  // Xóa payment
-  deletePayment: async (paymentId) => {
-    try {
-      const payment = await Payment.findByPk(paymentId);
-      if (!payment) {
-        throw new Error('Payment not found');
-      }
-      await payment.destroy();
-      return paymentId; // Trả về ID của payment đã xóa
-    } catch (error) {
-      throw new Error('Error deleting payment');
+      console.error("❌ Error updating payment status:", error);
+      throw new Error(error.message || "Error updating payment status");
     }
   },
 };

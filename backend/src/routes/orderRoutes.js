@@ -4,6 +4,7 @@ const router = express.Router();
 
 
 router.get('/', orderController.getOrders);
+router.get('/byId', orderController.getOrdersByUserId);
 
 
 router.post('/', orderController.createOrder);

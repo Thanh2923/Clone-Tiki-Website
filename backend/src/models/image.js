@@ -13,9 +13,9 @@ module.exports = (sequelize, DataTypes) => {
       // Mối quan hệ với bảng Products
       Image.belongsTo(models.Product, {
         foreignKey: 'productId',
-        as: 'product', // Optional alias for the relation
-        onDelete: 'SET NULL', // Optional: Set category to NULL when category is deleted
-        onUpdate: 'CASCADE' // Optional: Cascade updates to related products when category is updated
+        as: 'product', 
+        onDelete: 'SET NULL', 
+        onUpdate: 'CASCADE' 
       });
     }
   }

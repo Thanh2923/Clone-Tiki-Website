@@ -59,8 +59,7 @@ export const createUser = createAsyncThunk<User, { name: string; phone: string; 
   }
 );
 
-// Update User
-export const updateUser = createAsyncThunk<User, {name: string; phone: string; address: string }>(
+export const updateUser = createAsyncThunk<User, {name: string; phone: string; address: string,email?: string  }>(
   'user/updateUser',
   async (userData) => {
     try {

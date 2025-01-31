@@ -26,12 +26,12 @@ const AddressUser = () => {
       </div>
     </div>
     <div className="flex gap-2 mb-2 grid-cols-2">
-       <h3 className="font-semibold text-slate-800">{users[0]?.name}</h3> | 
-       <h3 className="font-semibold text-slate-800">{users[0]?.phone}</h3> 
+       <h3 className="font-semibold text-slate-800">{ users && users[0]?.name }</h3> | 
+       <h3 className="font-semibold text-slate-800">{ users && users[0]?.phone }</h3> 
       
     </div>
     <span className="text-gray-500">
-    {users[0]?.address}
+    { users && users[0]?.address }
     </span>
   </div>
   )

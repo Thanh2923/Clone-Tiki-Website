@@ -5,9 +5,9 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // Quan hệ một nhiều với Category
       Brand.belongsTo(models.Category, {
-        foreignKey: 'categoryId',  // Khoá ngoại
-        as: 'category',  // Tên alias cho quan hệ
-        onDelete: 'SET NULL',  // Xử lý khi Category bị xoá (set null cho categoryId)
+        foreignKey: 'categoryId',  
+        as: 'category',  
+        onDelete: 'SET NULL',  
       });
     }
   }

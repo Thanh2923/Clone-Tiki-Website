@@ -40,7 +40,7 @@ const SuggestionToday: React.FC = () => {
     return (
         <div className='w-full px-2 rounded-t-lg bg-white'>
             <Title title='Gợi ý hôm nay' />
-            <div className='w-full grid grid-cols-2 cursor-pointer md:grid-cols-4 lg:grid-cols-6'>
+            <div className='w-full grid grid-cols-3 cursor-pointer md:grid-cols-4 lg:grid-cols-6'>
                 {urlImage.map((item, index) => (
                     <div 
                         key={index}  // ✅ Đặt key ở đây

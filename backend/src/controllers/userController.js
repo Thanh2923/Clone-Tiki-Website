@@ -36,16 +36,24 @@ const userController = {
   },
   
  
-  updateUser : async (req, res) => {
+  updateUser: async (req, res) => {
     const userId = req.user.id;
-    const { name, phone,address } = req.body;
+    const { name, phone, address, email } = req.body;
+  
     try {
-      const updatedUser = await userService.updateUser(userId,{name,phone,address});
+      const updateUserData = { name, phone, address };
+
+      if (email) {
+        updateUserData.email = email;
+      }
+  
+      const updatedUser = await userService.updateUser(userId, updateUserData);
       res.status(200).json(updatedUser);
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
   },
+  
   
  
   deleteUser : async (req, res) => {

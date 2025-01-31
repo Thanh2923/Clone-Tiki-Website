@@ -14,7 +14,7 @@ interface Products {
 const ProductItem:React.FC<Products> = ({data}) => {
   console.log(data)
   return (
-    <div className="w-full cursor-pointer  mt-3 grid grid-cols-2 gap-3 md:grid-cols-4 lg:grid-cols-5 ">
+    <div className="w-full cursor-pointer  mt-3 grid grid-cols-3 gap-3 md:grid-cols-4 lg:grid-cols-5 ">
        { data && data.products.map((product) => (
          <Link key={product.id} href={`/${slugify(product?.category.name)}/${slugify(product.categoryId.toString())}/${slugify(product.name)}/${product.id}`}>
   <div  className="py-5  hover:shadow-xl rounded-lg flex px-3 bg-white flex-col">

@@ -26,7 +26,7 @@ const CartPurchase:React.FC<Total> = ({totalPrice,cartItem}) => {
 
   
     <div className="mb-2 bg-white w-full p-5 rounded-lg">
-      <h2 className="text-lg font-bold">Tiki Khuyến Mãi</h2>
+      <h2 className="text-lg font-bold">FDN Shop Khuyến Mãi</h2>
       <p className="text-sm text-blue-500">👉 Mua thêm để freeship 15k</p>
     </div>
 

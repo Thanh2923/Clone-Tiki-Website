@@ -44,7 +44,7 @@ const Page = async ({ params }: PageProps) => {
 
   return (
     <div className="w-full flex flex-col">
-      <div className="w-full my-3 gap-3 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3">
+      <div className="w-full mb-5 gap-3 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3">
         <ImageProductDetails productDetails={productDetails} />
         <InfoDetailProduct productDetails={productDetails} />
         <PurchaseProduct productDetails={productDetails} />

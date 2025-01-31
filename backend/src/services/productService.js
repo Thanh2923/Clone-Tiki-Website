@@ -60,6 +60,58 @@ const productService = {
       throw new Error('Error fetching products');
     }
   },
+
+  searchProducts : async (limit, page, searchQuery) => {
+    try {
+        const whereConditions = {
+            flag: true, // Chỉ lấy sản phẩm có flag = true
+        };
+
+        // Nếu có searchQuery, tìm kiếm theo name hoặc description
+        if (searchQuery) {
+            whereConditions[Op.or] = [
+                { name: { [Op.iLike]: `%${searchQuery}%` } }, // PostgreSQL
+                { description: { [Op.iLike]: `%${searchQuery}%` } }
+            ];
+        }
+
+        // Đếm tổng số sản phẩm thỏa mãn điều kiện
+        const totalProducts = await Product.count({
+            where: whereConditions,
+        });
+
+        // Tính tổng số trang
+        const totalPages = Math.ceil(totalProducts / limit);
+
+        // Truy vấn danh sách sản phẩm có phân trang
+        const products = await Product.findAll({
+            where: whereConditions,
+            limit: limit,
+            offset: (page - 1) * limit,
+            include: [
+                {
+                    model: Image,
+                    as: 'images',
+                    required: false,
+                    limit: 5,
+                },
+                {
+                    model: Category,
+                    as: 'category',
+                }
+            ],
+        });
+
+        return {
+            products,
+            currentPage: page,
+            totalPages: totalPages,
+        };
+    } catch (error) {
+        console.error("Error in searchProducts:", error.message);
+        throw new Error('Error searching products');
+    }
+},
   
   
   

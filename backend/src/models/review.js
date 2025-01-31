@@ -12,18 +12,18 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // Mối quan hệ với bảng Users
       Review.belongsTo(models.User, {
-        foreignKey: 'userId',  // userId là khóa ngoại trong bảng Reviews
-        as: 'user', // Alias cho quan hệ
-        onDelete: 'CASCADE', // Xóa đơn hàng khi người dùng bị xóa
-        onUpdate: 'CASCADE'  // Cập nhật userId khi người dùng được cập nhật
+        foreignKey: 'userId',  
+        as: 'user', 
+        onDelete: 'CASCADE', 
+        onUpdate: 'CASCADE'  
       });
 
       // Mối quan hệ với bảng Products
       Review.belongsTo(models.Product, {
-        foreignKey: 'productId', // productId là khóa ngoại trong bảng Reviews
-        as: 'product', // Alias cho quan hệ
-        onDelete: 'CASCADE', // Xóa đơn hàng khi người dùng bị xóa
-        onUpdate: 'CASCADE'  // Cập nhật userId khi người dùng được cập nhật
+        foreignKey: 'productId',
+        as: 'product',
+        onDelete: 'CASCADE', 
+        onUpdate: 'CASCADE'  
       });
     }
   }

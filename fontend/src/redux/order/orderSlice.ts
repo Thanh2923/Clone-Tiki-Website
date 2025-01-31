@@ -1,7 +1,7 @@
 // src/redux/orderSlice.ts
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchOrders, fetchOrderById, createOrder, updateOrder, removeOrder } from './orderThunk';
-import { Order } from '@/types';
+import { Order} from '@/types';
 
 interface OrderState {
   orders: Order[];
@@ -35,24 +35,20 @@ const orderSlice = createSlice({
         state.error = action.payload as string;
       })
 
-      // Fetch Order By ID
-      .addCase(fetchOrderById.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(fetchOrderById.fulfilled, (state, action) => {
-        state.loading = false;
-        const existingIndex = state.orders.findIndex(order => order.id === action.payload.id);
-        if (existingIndex !== -1) {
-          state.orders[existingIndex] = action.payload;
-        } else {
-          state.orders.push(action.payload);
-        }
-        state.error = null;
-      })
-      .addCase(fetchOrderById.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload as string;
-      })
+
+     // Fetch Orders
+     .addCase(fetchOrderById.pending, (state) => {
+      state.loading = true;
+    })
+    .addCase(fetchOrderById.fulfilled, (state, action) => {
+      state.loading = false;
+      state.orders = action.payload;
+      state.error = null;
+    })
+    .addCase(fetchOrderById.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload as string;
+    })
 
       // Create Order
       .addCase(createOrder.pending, (state) => {

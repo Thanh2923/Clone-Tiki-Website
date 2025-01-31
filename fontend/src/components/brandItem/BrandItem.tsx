@@ -51,7 +51,7 @@ const BrandItem: React.FC<BrandItemProps> = ({ handleFilter,selectedBrand, setBr
   }, [selectedBrand,handleFilter]);
 
   return (
-    <div className="w-full flex flex-wrap gap-2">
+    <div className="w-full flex  flex-wrap gap-2">
       {brands.map((brand) => (
         <button
           key={brand.id}

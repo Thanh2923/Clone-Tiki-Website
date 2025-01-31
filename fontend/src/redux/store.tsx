@@ -4,10 +4,12 @@ import { combineReducers } from 'redux';
 import cartReducer from './cart/cartSlice';
 import userReducer from './user/userSlice';
 import orderReducer from './order/orderSlice';
+import orderItemReducer from './orderItem/orderItemSlice';
 const rootReducer = combineReducers({
   Cart: cartReducer,
   User: userReducer,
-  Order:orderReducer
+  Order:orderReducer,
+  OrderItem:orderItemReducer
 
 });
 
