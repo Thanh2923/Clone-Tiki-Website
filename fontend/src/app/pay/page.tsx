@@ -1,13 +1,16 @@
 "use client"
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import AddressUser from "@/components/addressUser/AddressUser";
 import Checkout from "@/components/pay/Checkout";
 import ItemOrder from "@/components/pay/ItemOrder";
 import Title from "@/components/title/Title";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector} from "react-redux";
 import { createOrder } from "@/redux/order/orderThunk";
-import { AppDispatch } from "@/redux/store";
-// Định nghĩa interface cho sản phẩm nếu chưa có
+import { AppDispatch, RootState } from "@/redux/store";
+import { useState } from "react";
+import { toast } from "react-toastify";
+import { createPayment } from "@/redux/payment/paymentThunk";
+
 interface Product {
   id: number;
     name: string;
@@ -33,8 +36,10 @@ interface CartItem {
 const Page: React.FC = () => {
   const searchParams = useSearchParams();
   const cartData = searchParams.get("order");
+  const { users } = useSelector((state: RootState) => state.User);
+  const [selected, setSelected] = useState("payos");
   const dispatch = useDispatch<AppDispatch>();
-  // Giải mã và kiểm tra cartData
+  const router = useRouter();
   let cartItems: CartItem[] = [];
   try {
     cartItems = cartData ? JSON.parse(decodeURIComponent(cartData)) : [];
@@ -42,7 +47,6 @@ const Page: React.FC = () => {
     console.error("Error parsing cart data:", error);
   }
 
- 
   
   const totalAmount = cartItems && cartItems.reduce((total, item) => {
     const discountedPrice = item.product.priceSale - (item.product.priceSale * item.product.sale) / 100;
@@ -51,7 +55,7 @@ const Page: React.FC = () => {
   }, 0);
 
   const newArray = cartItems && cartItems.map(item => ({
-    productId: item.product.id, // Sửa lại từ item.productId thành item.product.id
+    productId: item.product.id, 
     quantity: item.quantity,
     price: Number(item.product.priceSale) - (Number(item.product.priceSale) * item.product.sale) / 100
 
@@ -60,20 +64,45 @@ const Page: React.FC = () => {
   const cartIdItem = cartItems && cartItems.map(item=>item.id);
   
  const handleCheckout = async ()=>{
+  if(users.length > 0 && !users[0]?.name){
+    router.push("/address");
+    return
+}
     const orderData= {
       totalPrice:totalAmount - 25000,
       orderDetail:newArray,
       cartId:cartIdItem
     }
 
-    dispatch(createOrder(orderData))
+    const req = await dispatch(createOrder(orderData));
 
- }
+    const dataPayment = {
+      orderId: req.payload.order,
+      amount: orderData.totalPrice,
+      paymentMethod: selected === "payos" ?  "paypal"  : "cash_on_delivery"
+    }
+
+   
+    if(selected === "payos" ){
+       const linkPayment =  await dispatch(createPayment(dataPayment))
+        if( linkPayment && linkPayment.payload.zalopayUrl.order_url){
+          toast.success("Tạo đơn hàng thành công !")
+          router.push(linkPayment.payload.zalopayUrl.order_url)
+        }
+    }else if(selected === "cash"){
+       await dispatch(createPayment(dataPayment))
+      toast.success("Đơn hàng đã đặt thành công !");
+      router.push("quan-ly-don-hang");
+     return
+    } else{
+      toast.warning("Kiểm tra lại kết nối mạng !")
+    }   
+    }
  
+
 
   return (
     <div className="w-full p-5 grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-12 h-full">
-    {/* Phần chọn hình thức giao hàng */}
     <div className="lg:col-span-8 md:col-span-2 p-2 bg-white">
       <Title title="Chọn hình thức giao hàng" />
       <div className="w-full">
@@ -95,11 +124,10 @@ const Page: React.FC = () => {
       </div>
     </div>
   
-    {/* Phần thông tin người nhận và thanh toán */}
     <div className="lg:col-span-4 md:col-span-2">
       <div className="w-full flex-col">
         <AddressUser />
-        <Checkout totalAmount={totalAmount} handleCheckout={handleCheckout} />
+        <Checkout totalAmount={totalAmount} handleCheckout={handleCheckout} setSelected={setSelected} selected={selected} />
       </div>
     </div>
   </div>

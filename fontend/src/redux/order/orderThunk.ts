@@ -62,7 +62,7 @@ export const createOrder = createAsyncThunk(
       const response = await axios.post(`${API_URL}/order`,orderData,{
         headers
       });
-      return response.data;
+       return response.data
     } catch (error) {
         if (error instanceof AxiosError) {
             console.log(error)

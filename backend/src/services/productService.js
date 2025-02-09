@@ -61,7 +61,7 @@ const productService = {
     }
   },
 
-  searchProducts : async (limit, page, searchQuery) => {
+ searchProducts : async (limit, page, searchQuery) => {
     try {
         const whereConditions = {
             flag: true, // Chỉ lấy sản phẩm có flag = true
@@ -69,16 +69,15 @@ const productService = {
 
         // Nếu có searchQuery, tìm kiếm theo name hoặc description
         if (searchQuery) {
+            const lowerSearchQuery = `%${searchQuery.toLowerCase()}%`;
             whereConditions[Op.or] = [
-                { name: { [Op.iLike]: `%${searchQuery}%` } }, // PostgreSQL
-                { description: { [Op.iLike]: `%${searchQuery}%` } }
+                { name: { [Op.like]: lowerSearchQuery } },
+                { description: { [Op.like]: lowerSearchQuery } }
             ];
         }
 
         // Đếm tổng số sản phẩm thỏa mãn điều kiện
-        const totalProducts = await Product.count({
-            where: whereConditions,
-        });
+        const totalProducts = await Product.count({ where: whereConditions });
 
         // Tính tổng số trang
         const totalPages = Math.ceil(totalProducts / limit);

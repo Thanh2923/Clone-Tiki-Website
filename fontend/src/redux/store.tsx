@@ -5,11 +5,13 @@ import cartReducer from './cart/cartSlice';
 import userReducer from './user/userSlice';
 import orderReducer from './order/orderSlice';
 import orderItemReducer from './orderItem/orderItemSlice';
+import paymentReducer from './payment/paymentSlice';
 const rootReducer = combineReducers({
   Cart: cartReducer,
   User: userReducer,
   Order:orderReducer,
-  OrderItem:orderItemReducer
+  OrderItem:orderItemReducer,
+  Payment:paymentReducer
 
 });
 

@@ -25,11 +25,11 @@ const orderController = {
 
   createOrder: async (req, res) => {
     const userId = req.user.id;
-    const { orderDetail, totalPrice, cartId=null } = req.body;
+    const { orderDetail, totalPrice, cartId } = req.body;
   
     try {
       const newOrder = await orderService.createOrder({ userId, totalPrice });
-  
+      
       if (!newOrder) {
         return res.status(400).json({ message: "Không thể tạo đơn hàng" });
       }
@@ -43,10 +43,11 @@ const orderController = {
         });
       }
   
-    if(cartId){
-      await cartService.removeFromInCartId(cartId)
-    }
-      res.status(201).json({ message: "Đặt hàng thành công", order: newOrder });
+      if (Array.isArray(cartId) && cartId.filter(id => id != null).length > 0) {
+        await cartService.removeFromInCartId(cartId.filter(id => id != null));
+      }
+      
+      res.status(201).json({ message: "Đặt hàng thành công", order: newOrder.id });
     } catch (error) {
       res.status(500).json({ message: error.message });
     }

@@ -1,42 +1,55 @@
-import Title from "../title/Title"
+
+import { Dispatch, SetStateAction } from 'react';
 import './payment.css'
 import Image from "next/image"
-const PayMentMethod:React.FC = () => {
-  return (
-    <div className="w-full bg-white p-5 flex flex-col">
-      <Title title="Chọn phương thức thanh toán"/>
-      <label className="inline-flex items-center cursor-pointer">
 
-<input type="checkbox" className="hidden peer" />
-
-<span className="w-5 h-5 mr-2 rounded-full border-2 border-gray-400 peer-checked:bg-blue-500 peer-checked:border-blue-500 peer-checked:ring-2 peer-checked:ring-white transition-colors"></span>
-<Image
-                 className=" w-[50px]  h-[50px] "
-                      src={`/logo/payos.png`}
-                      alt=""
-                      width={100}
-                      height={100}
-                    />
-
-Thanh toán PayOs
-</label>
-      <label className="inline-flex items-center cursor-pointer">
-
-  <input type="checkbox" className="hidden peer" />
-
-  <span className="w-5 h-5 mr-2 rounded-full border-2 border-gray-400 peer-checked:bg-blue-500 peer-checked:border-blue-500 peer-checked:ring-2 peer-checked:ring-white transition-colors"></span>
-  
-                    <Image
-                      src={`/logo/paymoney.png`}
-                      alt=""
-                      width={40}
-                      height={40}
-                    /> Thanh toán tiền mặt
-</label>
-
-
-    </div>
-  )
+interface PaymentMethod{
+  setSelected: Dispatch<SetStateAction<string>>,
+  selected: string;
 }
+const PaymentMethod:React.FC<PaymentMethod> = ({setSelected,selected}) => {
+  const methods = [
+    { id: "cash", label: "Thanh toán tiền mặt", icon:<Image
+      src={`/logo/paymoney.png`}
+      alt=""
+      width={40}
+      height={40}
+    /> },
+    { id: "payos", label: "Zalopay", icon:<Image
+      className=" w-[50px]  h-[30px] "
+           src={`/logo/zalopay.png`}
+           alt=""
+           width={100}
+           height={100}
+         />
+, subLabel: "Quét Mã QR từ ứng dụng ngân hàng" },
+  ];
 
-export default PayMentMethod
+  return (
+    <div className="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md">
+      <h2 className="text-lg font-semibold mb-4">Chọn hình thức thanh toán</h2>
+      <div className="space-y-3">
+        {methods.map((method) => (
+          <label key={method.id} className="flex items-center space-x-3 cursor-pointer">
+            <input
+              type="radio"
+              name="payment"
+              value={method.id}
+              checked={selected === method.id}
+              onChange={() => setSelected(method.id)}
+              className="form-radio text-blue-600"
+            />
+            {method.icon && <div className="text-xl">{method.icon}</div>}
+            <div>
+              <p className="font-medium">{method.label}</p>
+              {method.subLabel && <p className="text-sm text-gray-500">{method.subLabel}</p>}
+            </div>
+          </label>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default PaymentMethod;
+

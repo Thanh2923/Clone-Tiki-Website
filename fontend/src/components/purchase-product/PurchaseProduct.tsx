@@ -1,5 +1,5 @@
 "use client"
-import  {useState} from "react";
+import  { useState} from "react";
 import Image from "next/image";
 import { Product } from "@/types";
 import FormatPrice from "../formatPrice/FormatPrice";
@@ -10,6 +10,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+
 interface Item {
   productDetails: Product;
 }
@@ -25,12 +26,10 @@ const PurchaseProduct: React.FC<Item> = ({ productDetails}) => {
   const [quantity, setQuantity] = useState<number>(1);
   const images = productDetails.images.map((img) => `/product/images/${img.url}`);
  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
-
-
   const increaseQuantity = () => setQuantity(quantity + 1);
   const decreaseQuantity = () => setQuantity(Math.max(1, quantity - 1));
   const handleCheckout = () => {
-   
+    
       if(productDetails){
         const encodedCart = encodeURIComponent(JSON.stringify([{product:productDetails,quantity:quantity}]));
       router.push(`/pay?order=${encodedCart}`);
@@ -58,6 +57,7 @@ const PurchaseProduct: React.FC<Item> = ({ productDetails}) => {
       }
       
     };
+
 
  
   return (

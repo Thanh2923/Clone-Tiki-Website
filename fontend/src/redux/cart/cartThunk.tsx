@@ -68,7 +68,7 @@ export const fetchCartByIdUser = createAsyncThunk(
         headers,
       });
 
-      return response.data; // Trả về data khi thành công
+      return response.data; 
     } catch (error) {
       if (error instanceof AxiosError) {
         return rejectWithValue(error.response?.data || error.message); // Trả về lỗi nếu có

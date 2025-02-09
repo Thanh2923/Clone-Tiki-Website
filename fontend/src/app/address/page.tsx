@@ -89,7 +89,7 @@ export default function AddressForm() {
       await dispatch(updateUser({ name, phone, address }));
       toast.success("Lưu thông tin thành công !");
       setTimeout(()=>{
-      router.push("/cart");
+      router.back();
       })
     }else{
      toast.info("Bạn chưa đăng nhập !");

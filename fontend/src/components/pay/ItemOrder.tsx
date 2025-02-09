@@ -22,7 +22,6 @@ interface ItemOrderProps {
 }
 
 const ItemOrder: React.FC<ItemOrderProps> = ({ product, quantity }) => {
-  console.log(product)
   return (
   
     <div className="w-full">

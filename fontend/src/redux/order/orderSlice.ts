@@ -5,12 +5,14 @@ import { Order} from '@/types';
 
 interface OrderState {
   orders: Order[];
+  orderId:number | null;
   loading: boolean;
   error: string | null;
 }
 
 const initialState: OrderState = {
   orders: [],
+  orderId:null,
   loading: false,
   error: null,
 };
@@ -56,7 +58,7 @@ const orderSlice = createSlice({
       })
       .addCase(createOrder.fulfilled, (state, action) => {
         state.loading = false;
-        state.orders.push(action.payload);
+        state.orderId = action.payload
         state.error = null;
       })
       .addCase(createOrder.rejected, (state, action) => {

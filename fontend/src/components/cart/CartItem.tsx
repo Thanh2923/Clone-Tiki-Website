@@ -6,7 +6,7 @@ import Title from "../title/Title";
 import { useSelector,useDispatch } from "react-redux";
 import { RootState,AppDispatch } from "@/redux/store";
 import FormatPrice from "../formatPrice/FormatPrice";
-import { removeAllCartByUserId, removeCartById, updateQuantity } from "@/redux/cart/cartThunk";
+import { fetchCartByIdUser, removeAllCartByUserId, removeCartById, updateQuantity } from "@/redux/cart/cartThunk";
 import { Cart, UpdateCart } from "@/types";
 import DeleteItem from "../DeleteItem/DeleteItem";
 import { toast } from "react-toastify";
@@ -23,6 +23,8 @@ const CartItem: React.FC<handle> = ({handleSetTotal,handleCartItem}) => {
   const [quantities, setQuantities] = useState<{ [key: number]: number }>({});
   const { cartItems } = useSelector((state: RootState) => state.Cart);
   const [cart,setCart] = useState(cartItems || []);
+  console.log(cart, "cart");
+  console.log(cartItems, "cartItems");
   const [idDelete,setIdDelete] = useState<number[]>([]);
   const [isOpenDelete,setIsOpenDelete] = useState<boolean>(false);
   const isOpen = (id:number | null,IdCartItemChecked:number[] )=> {
@@ -130,6 +132,10 @@ const CartItem: React.FC<handle> = ({handleSetTotal,handleCartItem}) => {
     handleCartItem(cart);
   }, [cart,handleCartItem]);
 
+  useEffect(()=>{
+    dispatch(fetchCartByIdUser())
+  },[dispatch])
+
  
 
   return (
@@ -161,10 +167,10 @@ const CartItem: React.FC<handle> = ({handleSetTotal,handleCartItem}) => {
               <div className="flex items-center gap-2">
                 <input type="checkbox" onChange={(e) => handleCheckboxItem(cart.id, e.target.checked)} checked={cart.checkbox} />
                 <Image src={`/product/images/${cart?.product?.image}`} alt="Logo" width={80} height={40} />
-                <h3 className="uppercase text-sm">{cart.product.name}</h3>
+                <h3 className="uppercase text-sm">{cart?.product?.name}</h3>
               </div>
               <span className="font-semibold text-red-500 lg:block hidden">
-                <FormatPrice price={cart.product.priceSale - (cart.product.priceSale * cart.product.sale) / 100} /> ₫
+                <FormatPrice price={cart?.product?.priceSale - (cart?.product?.priceSale * cart?.product?.sale) / 100} /> ₫
               </span>
               <div className="flex flex-col lg:flex-row lg:items-center gap-2 mt-2 lg:mt-0">
                 <div className="flex items-center border px-2 py-1 rounded-md">
@@ -174,11 +180,11 @@ const CartItem: React.FC<handle> = ({handleSetTotal,handleCartItem}) => {
                 </div>
 
                 <span className="font-semibold text-red-500 block lg:hidden">
-                  <FormatPrice price={(cart.product.priceSale - (cart.product.priceSale * cart.product.sale) / 100) * (quantities[cart.id] || 1)} /> ₫
+                  <FormatPrice price={(cart?.product?.priceSale - (cart?.product?.priceSale * cart?.product?.sale) / 100) * (quantities[cart.id] || 1)} /> ₫
                 </span>
               </div>
               <span className="font-semibold text-red-500 hidden lg:block">
-                <FormatPrice price={(cart.product.priceSale - (cart.product.priceSale * cart.product.sale) / 100) * (quantities[cart.id] || 1)} /> ₫
+                <FormatPrice price={(cart?.product?.priceSale - (cart?.product?.priceSale * cart?.product?.sale) / 100) * (quantities[cart.id] || 1)} /> ₫
               </span>
               <span onClick={() => isOpen(cart.id, IdCartItemChecked)} className="font-semibold cursor-pointer text-lg text-slate-500">
                 <MdDeleteOutline />

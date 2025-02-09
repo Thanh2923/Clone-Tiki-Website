@@ -12,7 +12,7 @@ interface Products {
   }
 }
 const ProductItem:React.FC<Products> = ({data}) => {
-  console.log(data)
+  console.log(data,"data")
   return (
     <div className="w-full cursor-pointer  mt-3 grid grid-cols-3 gap-3 md:grid-cols-4 lg:grid-cols-5 ">
        { data && data.products.map((product) => (

@@ -1,24 +1,52 @@
-"use client"
+"use client";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-const Page:React.FC = () => {
-    const searchParams = useSearchParams();
-    const query = searchParams.get("query"); // Lấy giá trị từ URL
-    console.log(query)
-    const [results, setResults] = useState([]);
-    console.log(results)
-    useEffect(() => {
-        if (query) {
-            fetch(`http://localhost:8080/api/product/search?searchQuery=ffhdfhdfhfdh`) // Gửi request đến API tìm kiếm
-                .then(res => res.json())
-                .then(data => setResults(data.products));
-        }
-    }, [query]);
-  return (
-    <div className="w-full">
-        <h1>Searct</h1>
-    </div>
-  )
+import ProductItem from "@/components/product/ProductItem";
+import { Product } from "@/types";
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+ 
+interface Data {
+  products:Product[],
+  currentPage:number,
+  totalPages:number
 }
 
-export default Page
+const SearchPage = () => {
+    const searchParams = useSearchParams();
+    const query = searchParams.get("query") || "";
+
+    const [products, setProducts] = useState<Data>({ products: [], currentPage: 1, totalPages: 1 });
+
+    useEffect(() => {
+        const fetchProducts = async () => {
+            if (!query) return;
+
+            try {
+                const res = await fetch(`${API_URL}/product/search?searchQuery=${query}`, {
+                    cache: "no-store",
+                });
+
+                if (!res.ok) {
+                    throw new Error("Failed to fetch products");
+                }
+
+                const data = await res.json();
+                setProducts(data);
+            } catch (error) {
+                console.error("Fetch error:", error);
+                setProducts({ products: [], currentPage: 1, totalPages: 1 });
+            }
+        };
+
+        fetchProducts();
+    }, [query]);
+
+    return (
+        <div className="w-full">
+            <ProductItem data={products} />
+        </div>
+    );
+};
+
+export default SearchPage;

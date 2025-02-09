@@ -16,16 +16,16 @@ const productController = {
   },
 
   searchProducts: async (req, res) => {
-    const { searchQuery } = req.query;
+    const { searchQuery,limit,page } = req.query;
    console.log(searchQuery)
-    // const limitNum = limit ? parseInt(limit) : 10;  // Giới hạn mặc định là 10
-    // const pageNum = page ? parseInt(page) : 1;  // Trang mặc định là 1
-    // try {
-    //   const products = await productService.searchProducts(limitNum, pageNum,searchQuery );
-    //   res.status(200).json(products);
-    // } catch (error) {
-    //   res.status(500).json({ message: error.message });
-    // }
+    const limitNum = limit ? parseInt(limit) : 10;  // Giới hạn mặc định là 10
+    const pageNum = page ? parseInt(page) : 1;  // Trang mặc định là 1
+    try {
+      const products = await productService.searchProducts(limitNum, pageNum,searchQuery );
+      res.status(200).json(products);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
   },
 
   getProductById: async (req, res) => {

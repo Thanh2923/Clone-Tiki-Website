@@ -23,8 +23,8 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL;
   return (
    
    <>
-   <div className="lg:w-[18%] sticky top-[100px] md:top-[100px] h-full overflow-y-auto rounded-lg  bg-white ">
-             <Categories/>
+   <div className="lg:w-[18%] lg:block hidden sticky z-10 top-[100px] md:top-[100px] h-full overflow-y-auto rounded-lg  bg-white ">
+   <Categories />
          </div>
          <div className="lg:w-[80%] w-full rounded-lg h-full ">
     <div className="w-[98%]">

@@ -3,24 +3,27 @@ const paymentService = require("../services/paymentService");  // Đảm bảo b
 const paymentController = {
   // Tạo thanh toán mới
   createPayment: async (req, res) => {
-    const { orderId, userId, amount, paymentMethod } = req.body;
+    const { orderId, amount, paymentMethod } = req.body;
+    const userId = req.user.id;
+  
     try {
-      const { payment, payosUrl } = await paymentService.createPayment({
+      const { payment, zalopayUrl } = await paymentService.createPayment({
         orderId,
         userId,
         amount,
         paymentMethod,
       });
 
-      // Trả về thông tin payment và URL PayOS
+  
       res.status(201).json({
         payment,
-        payosUrl,
+        zalopayUrl, 
       });
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
   },
+  
 
   // Cập nhật trạng thái thanh toán
   updatePayment: async (req, res) => {

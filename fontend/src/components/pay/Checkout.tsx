@@ -1,12 +1,15 @@
 
+import { Dispatch, SetStateAction } from "react";
 import FormatPrice from "../formatPrice/FormatPrice"
-import PayMentMethod from "./PayMentMethod"
-
+import PaymentMethod from "./PayMentMethod";
 interface TotalPriceOrder{
   totalAmount:number,
-  handleCheckout:()=>void
+  handleCheckout:()=>void,
+  setSelected: Dispatch<SetStateAction<string>>,
+  selected: string;
 }
-const Checkout:React.FC<TotalPriceOrder> = ({totalAmount,handleCheckout}) => {
+
+const Checkout:React.FC<TotalPriceOrder> = ({totalAmount,handleCheckout,setSelected,selected}) => {
 
   return (
     <div className="w-full p-5 rounded-lg bg-white flex flex-col">
@@ -53,7 +56,7 @@ const Checkout:React.FC<TotalPriceOrder> = ({totalAmount,handleCheckout}) => {
          </div>
        </div>
        <span className="text-[12px] py-2 text-gray-400">(Giá này đã bao gồm thuế GTGT, phí đóng gói, phí vận chuyển và các chi phí phát sinh khác)</span>
-       <PayMentMethod/>
+       <PaymentMethod setSelected={setSelected} selected={selected}/>
        <button type="button" onClick={handleCheckout} className="w-full p-3 text-lg rounded-lg hover:bg-red-600 font-semibold bg-red-500 text-white text-center">Đặt hàng</button>
        
     </div>
